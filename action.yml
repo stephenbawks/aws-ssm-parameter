@@ -1,0 +1,23 @@
+name: AWS SSM Parameters
+description: Checks to see if AWS SSM Parameter exists.  If it does not, it will create it.  If it does exist, it will check to see that is current and up to date.
+
+branding:
+  icon: refresh-cw
+  color: green
+
+inputs:
+  parameter-name:  # id of input
+    description: AWS SSM Parameter Name
+    required: true
+  parameter-vaue:
+    description: AWS SSM Parameter Value
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - run: echo "--- Checking AWS SSM Parameters ---"
+      shell: bash
+    - id: ssm-parameters
+      run: ssm-parameter.py --name=${{ inputs.parameter-name }} --value=${{ inputs.parameter-vaue }}
+      shell: python
