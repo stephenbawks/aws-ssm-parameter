@@ -24,4 +24,4 @@ runs:
       shell: bash
     - id: ssm-parameters
       run: ${{ github.action_path }}/ssm-parameter.py --name=${{ inputs.parameter-name }} --value=${{ inputs.parameter-value }}
-      shell: python
+      shell: bash
