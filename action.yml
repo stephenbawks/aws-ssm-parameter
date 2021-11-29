@@ -19,5 +19,5 @@ runs:
     - run: echo "--- Checking AWS SSM Parameters ---"
       shell: bash
     - id: ssm-parameters
-      run: ssm-parameter.py --name=${{ inputs.parameter-name }} --value=${{ inputs.parameter-vaue }}
+      run: $${{ github.actions_path ]]/ssm-parameter.py --name=${{ inputs.parameter-name }} --value=${{ inputs.parameter-vaue }}
       shell: python
