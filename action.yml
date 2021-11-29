@@ -9,7 +9,7 @@ inputs:
   parameter-name:  # id of input
     description: AWS SSM Parameter Name
     required: true
-  parameter-vaue:
+  parameter-value:
     description: AWS SSM Parameter Value
     required: true
 
@@ -23,5 +23,5 @@ runs:
     - run: chmod +x ${{ github.action_path }}/ssm-parameter.py
       shell: bash
     - id: ssm-parameters
-      run: ${{ github.actions_path }}/ssm-parameter.py --name=${{ inputs.parameter-name }} --value=${{ inputs.parameter-vaue }}
+      run: ${{ github.actions_path }}/ssm-parameter.py --name=${{ inputs.parameter-name }} --value=${{ inputs.parameter-value }}
       shell: python
