@@ -18,6 +18,8 @@ runs:
   steps:
     - run: echo "--- Checking AWS SSM Parameters ---"
       shell: bash
+    - run: pip3 install boto3
+      shell: bash
     - run: chmod +x ${{ github.action_path }}/ssm-parameter.py
       shell: bash
     - id: ssm-parameters
