@@ -1,5 +1,8 @@
 # AWS SSM Parameter
 
+## How To Use This Action
+
+
 ## SSM Parameter Naming Constraints
 
 * Parameter names are case sensitive.
