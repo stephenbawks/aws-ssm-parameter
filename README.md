@@ -1,5 +1,8 @@
 # AWS SSM Parameter
 
+## Purpose
+
+
 ## How To Use This Action
 
 
