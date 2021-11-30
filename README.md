@@ -1,6 +1,6 @@
 # AWS SSM Parameter
 
-## Naming Constraints:
+## SSM Parameter Naming Constraints
 
 * Parameter names are case sensitive.
 * A parameter name must be unique within an AWS Region
