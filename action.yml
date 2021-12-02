@@ -6,7 +6,7 @@ branding:
   color: green
 
 inputs:
-  parameter-name:  # id of input
+  parameter-name: # id of input
     description: AWS SSM Parameter Name
     required: true
   parameter-value:
@@ -14,13 +14,11 @@ inputs:
     required: true
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - run: echo "--- Checking AWS SSM Parameters ---"
       shell: bash
     - run: pip3 install boto3
-      shell: bash
-    - run: chmod +x ${{ github.action_path }}/ssm-parameter.py
       shell: bash
     - id: ssm-parameters
       run: ${{ github.action_path }}/ssm-parameter.py --name=${{ inputs.parameter-name }} --value=${{ inputs.parameter-value }}
