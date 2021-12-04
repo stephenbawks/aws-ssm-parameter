@@ -3,7 +3,7 @@
 import json
 import os
 import boto3
-import botocore
+from botocore.exceptions import ClientError
 import sys
 import argparse
 
@@ -18,24 +18,31 @@ import argparse
 """
 
 parser = argparse.ArgumentParser(description="Check for AWS SSM Parameter")
+# group = parser.add_mutually_exclusive_group()
+
+# group.add_argument('--single_value', action='store_true')
+# group.add_argument('--list_of_values', action='store_true')
 
 parser.add_argument(
-    "-n",
     "--name",
-    dest="name",
+    metavar='name',
     type=str,
-    help="AWS SSM Parameter Name",
-    required=True,
+    help="AWS SSM Parameter Name"
 )
 
 parser.add_argument(
-    "-v",
     "--value",
-    dest="value",
+    metavar='value',
     type=str,
-    help="AWS SSM Parameter Value",
-    required=True,
+    help="AWS SSM Parameter Value"
 )
+
+# parser.add_argument(
+#     "--list_of_values",
+#     metavar='list_of_values',
+#     type=list,
+#     help="AWS SSM List of Parameter Values"
+# )
 
 args = parser.parse_args()
 
@@ -49,10 +56,12 @@ def check_exists_ssm_parameter(parameter_name: str) -> bool:
         ssm.get_parameter(Name=parameter_name, WithDecryption=True)
         # If the parameter exists, return the value
         return True
-    except botocore.errorfactory.ParameterNotFound:
+    except ClientError as e:
         # If the parameter does not exist, return None
-        return False
-
+        if e.response['Error']['Code'] == 'ParameterNotFound':
+            return False
+        else:
+            raise
 
 def check_value_ssm_parameter(parameter_name: str, parameter_value: str) -> bool:
     """
