@@ -12,6 +12,9 @@ inputs:
   parameter-value:
     description: AWS SSM Parameter Value
     required: true
+  parameter-description:
+    description: AWS SSM Parameter Description
+    required: false
 
 runs:
   using: 'composite'
@@ -21,5 +24,5 @@ runs:
     - run: pip3 install boto3
       shell: bash
     - id: ssm-parameters
-      run: ${{ github.action_path }}/ssm-parameter.py --name=${{ inputs.parameter-name }} --value=${{ inputs.parameter-value }}
+      run: ${{ github.action_path }}/ssm-parameter.py --name=${{ inputs.parameter-name }} --value=${{ inputs.parameter-value }} --description=${{ inputs.parameter-description }}
       shell: bash
