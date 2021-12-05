@@ -6,13 +6,13 @@ branding:
   color: green
 
 inputs:
-  parameter-name: # id of input
+  name: # id of input
     description: AWS SSM Parameter Name
     required: true
-  parameter-value:
+  value:
     description: AWS SSM Parameter Value
     required: true
-  parameter-description:
+  description:
     description: AWS SSM Parameter Description
     required: false
 
@@ -24,5 +24,5 @@ runs:
     - run: pip3 install boto3
       shell: bash
     - id: ssm-parameters
-      run: ${{ github.action_path }}/ssm-parameter.py --name=${{ inputs.parameter-name }} --value=${{ inputs.parameter-value }} --description=${{ inputs.parameter-description }}
+      run: ${{ github.action_path }}/ssm-parameter.py --name=${{ inputs.name }} --value=${{ inputs.value }} --description=${{ inputs.description }}
       shell: bash
