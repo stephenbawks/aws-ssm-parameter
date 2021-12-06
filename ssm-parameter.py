@@ -1,10 +1,8 @@
 #!/usr/bin/python
 
 import json
-import os
 import boto3
 from botocore.exceptions import ClientError
-import sys
 import argparse
 
 
@@ -96,8 +94,12 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
         else:
             print("Parameter needs to be updated.")
             return False
-    except:
-        value = None
+    except ClientError as e:
+        # If the parameter does not exist, return None
+        if e.response['Error']['Code'] == 'ParameterNotFound':
+            return False
+        else:
+            raise
 
 def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="") -> bool:
     """
@@ -121,8 +123,22 @@ def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_descr
         )
         print("Parameter has been created.")
         return True
-    except:
-        value = None
+    except ClientError as e:
+        # If the parameter does not exist, return None
+        if e.response['Error']['Code'] == 'ParameterLimitExceeded':
+            print("Parameter Limit Exceeded")
+            print("Parameter Store API calls can't exceed the maximum allowed API request rate per account and per Region.")
+            print("https://docs.aws.amazon.com/general/latest/gr/ssm.html")
+            return False
+        if e.response['Error']['Code'] == 'InvalidAllowedPatternException':
+            print("Invalid Allowed Pattern")
+            print("https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_PutParameter.html#API_PutParameter_RequestSyntax")
+            return False
+        if e.response['Error']['Code'] == 'TooManyUpdates':
+            print("There are concurrent updates for a resource that supports one update at a time.")
+            return False
+        else:
+            raise
 
 
 check_exists = check_exists_ssm_parameter(parameter_name=args.name)
