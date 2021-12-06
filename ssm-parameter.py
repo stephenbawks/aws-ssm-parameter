@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import json
 import boto3
 from botocore.exceptions import ClientError
 import argparse
@@ -52,29 +51,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-def check_exists_ssm_parameter(parameter_name: str) -> bool:
-    """
-    Check to see if a AWS SSM Parameter exists
-
-    Returns:
-        (bool): True or False 
-    """
-    ssm = boto3.client('ssm')
-    # Check if the ssm parameter exists
-    try:
-        # Get the value of the ssm parameter
-        ssm.get_parameter(Name=parameter_name, WithDecryption=True)
-        # If the parameter exists, return the value
-        print("Parameter Exists, checking to see if Value is up to date.")
-        return True
-    except ClientError as e:
-        # If the parameter does not exist, return None
-        if e.response['Error']['Code'] == 'ParameterNotFound':
-            return False
-        else:
-            raise
-
-def check_value_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="") -> bool:
+def check_value_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="", parameter_tier: str="Intelligent-Tiering") -> bool:
     """
     Check to see if the value of a AWS SSM Parameter is up to date
     If it is not, it will update it
@@ -85,18 +62,23 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
     ssm = boto3.client('ssm')
 
     try:
-        response = ssm.get_parameter(
-            Name=parameter_name,
-            WithDecryption=True
-        )
+        response = ssm.get_parameter(Name=parameter_name, WithDecryption=True)
         value = response['Parameter']['Value']
-        description = response['Parameter']['Description']
+        print("Parameter Exists, checking to see if Value is up to date.")
 
-        if value == parameter_value:
-            print("SSM Parameter Value is the same, nothing to do.")
-            return True
-        elif description == parameter_description:
-            print("SSM Parameter Description is the same, nothing to do.")
+        parameter_details = ssm.describe_parameters(
+            ParameterFilters=[
+                {
+                    'Key': parameter_name,
+                    'Values': [parameter_value]
+                },
+            ],
+        )
+        description = parameter_details['Parameters'][0]['Description']
+        tier = parameter_details['Parameters'][0]['Tier']
+
+        if value == parameter_value and description == parameter_description and tier == parameter_tier:
+            print("SSM Parameter is correct and details are up to date, nothing to do.")
             return True
         else:
             print("Parameter needs to be updated.")
@@ -148,15 +130,9 @@ def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_descr
             raise
 
 
-check_exists = check_exists_ssm_parameter(parameter_name=args.name)
+value_response = check_value_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description, parameter_tier=args.tier)
 
-if check_exists == True:
-    # value exists, checking to see if the value is up to date
-    value_response = check_value_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description)
+if value_response == False:
     # value needs to be updated
-    if value_response == False:
-        put_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description)
-elif check_exists == False:
-    # value does not exist, creating it
     put_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description, parameter_tier=args.tier)
 
