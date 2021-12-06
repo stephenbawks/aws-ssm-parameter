@@ -23,11 +23,11 @@ Currently this option takes three different inputs/arguments.  Two of them are r
 ### SSM Parameter Naming Constraints
 
 * Parameter names are case sensitive.
-* A parameter name must be unique within an AWS Region
+* A parameter name must be unique within an AWS Region.
 * A parameter name can't be prefixed with "aws" or "ssm" (case-insensitive).
-* Parameter names can include only the following symbols and letters: a-zA-Z0-9_.-/
+* Parameter names can include only the following symbols and letters: `a-zA-Z0-9_.-/`
 * A parameter name can't include spaces.
-* Parameter hierarchies are limited to a maximum depth of fifteen le
+* Parameter hierarchies are limited to a maximum depth of fifteen levels.
 
 
 ## Examples
@@ -43,7 +43,9 @@ As as emample, suppose you want to create a SSM Parameter in Parameter Store but
       description: Super Secret - Do Not Tell Anyone
 ```
 
-The action does not require you to specify a `tier` when using the action.  When you do not specify one, it will default your parameter to be an `Intelligent-Tiering` parameter.  If that does not work for you, you can also specify `Standard` or `Advanced`.  Check out the [AWS documentation on tiers](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html#ps-default-tier) for more details if you want more information on selecting a tier. See example below.
+The action does not require you to specify a `tier` when using the action.  When you do not specify one, it will default your parameter to be an `Intelligent-Tiering` type parameter.  
+
+If that does not work for you, you can also specify `Standard` or `Advanced`.  Check out the [AWS documentation on tiers](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html#ps-default-tier) for more details if you want more information on selecting a tier.  See example below.
 ```yaml
 - name: Awesome Clinet Secret - SSM Parameter
   uses: stephenbawks/aws-ssm-parameter@v1.6
