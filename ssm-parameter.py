@@ -85,27 +85,21 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
             WithDecryption=True
         )
         value = response['Parameter']['Value']
+        description = response['Parameter']['Description']
 
         if value == parameter_value:
-            print("Parameter is the same, nothing to do.")
+            print("SSM Parameter Value is the same, nothing to do.")
+            return True
+        elif description == parameter_description:
+            print("SSM Parameter Description is the same, nothing to do.")
             return True
         else:
-            print("Parameter needs to be updated, updating now.....")
-            update_response = ssm.put_parameter(
-                Name=parameter_name,
-                Value=parameter_value,
-                Description=parameter_description,
-                Type='SecureString',
-                Overwrite=True,
-                Tier='Intelligent-Tiering',
-                DataType='text'
-            )
-            print("Parameter has been updated.")
-            return True
+            print("Parameter needs to be updated.")
+            return False
     except:
         value = None
 
-def create_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="") -> bool:
+def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="") -> bool:
     """
     Create a AWS SSM Parameter
 
@@ -134,7 +128,12 @@ def create_ssm_parameter(parameter_name: str, parameter_value: str, parameter_de
 check_exists = check_exists_ssm_parameter(parameter_name=args.name)
 
 if check_exists == True:
-    check_value_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description)
+    # value exists, checking to see if the value is up to date
+    value_response = check_value_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description)
+    # value needs to be updated
+    if value_response == False:
+        put_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description)
 elif check_exists == False:
-    create_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description)
+    # value does not exist, creating it
+    put_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description)
 
