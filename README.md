@@ -12,11 +12,12 @@ This actions purpose is to create SSM Parameters for you in a Github workflow.  
 Currently this option takes three different inputs/arguments.  Two of them are required and one is optional.  
 
 ### Inputs
-| Name          | Type   | Required | Description                                     |
-| ------------- | ------ | -------- | ----------------------------------------------- |
-| `name`        | string | Yes      | SSM Parameter Name                              |
-| `value`       | string | Yes      | SSM Parameter Value                             |
-| `description` | string | No       | (Optional) Parameter to attach to SSM Parameter |
+| Name          | Type   | Required | Description                                                                                                                  |
+| ------------- | ------ | -------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `name`        | string | Yes      | SSM Parameter Name                                                                                                           |
+| `value`       | string | Yes      | SSM Parameter Value                                                                                                          |
+| `description` | string | No       | (Optional) Parameter to attach to SSM Parameter                                                                              |
+| `tier`        | string | No       | (Optional) Parameter Tier. Default Value: `Intelligent-Tiering` Valid Values: `Standard`,  `Advanced`, `Intelligent-Tiering` |
 
 
 ### SSM Parameter Naming Constraints
@@ -40,4 +41,14 @@ As as emample, suppose you want to create a SSM Parameter in Parameter Store but
       name: /awesome/clientSecret
       value: ${{ secrets.AWESOME_CLIENT_SECRET }}
       description: Super Secret - Do Not Tell Anyone
+```
+
+The action does not require you to specify a `tier` when using the action.  When you do not specify one, it will default your parameter to be an `Intelligent-Tiering` parameter.  If that does not work for you, you can also specify `Standard` or `Advanced`.  See example below.
+```yaml
+- name: Awesome Clinet Secret - SSM Parameter
+  uses: stephenbawks/aws-ssm-parameter@v1.6
+  with:
+      name: /awesome/clientSecret
+      value: ${{ secrets.AWESOME_CLIENT_SECRET }}
+      tier: Advanced
 ```

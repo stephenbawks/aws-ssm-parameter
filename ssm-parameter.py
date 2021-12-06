@@ -42,6 +42,13 @@ parser.add_argument(
     help="AWS SSM Parameter Description"
 )
 
+parser.add_argument(
+    "--tier",
+    metavar='tier',
+    type=str,
+    help="The parameter tier to assign to a parameter."
+)
+
 args = parser.parse_args()
 
 
@@ -101,7 +108,7 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
         else:
             raise
 
-def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="") -> bool:
+def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="", parameter_tier: str="Intelligent-Tiering") -> bool:
     """
     Create a AWS SSM Parameter
 
@@ -118,7 +125,7 @@ def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_descr
             Description=parameter_description,
             Type='SecureString',
             Overwrite=True,
-            Tier='Intelligent-Tiering',
+            Tier=parameter_tier,
             DataType='text'
         )
         print("Parameter has been created.")
@@ -151,5 +158,5 @@ if check_exists == True:
         put_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description)
 elif check_exists == False:
     # value does not exist, creating it
-    put_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description)
+    put_ssm_parameter(parameter_name=args.name, parameter_value=args.value, parameter_description=args.description, parameter_tier=args.tier)
 
