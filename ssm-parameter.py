@@ -90,7 +90,7 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
         else:
             raise
 
-def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="", parameter_tier: str="Intelligent-Tiering") -> bool:
+def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str, parameter_tier: str) -> bool:
     """
     Create a AWS SSM Parameter
 

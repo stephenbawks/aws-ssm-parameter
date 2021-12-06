@@ -15,9 +15,11 @@ inputs:
   description:
     description: AWS SSM Parameter Description
     required: false
+    default: ''
   tier:
     description: AWS SSM Parameter Tier
     required: false
+    default: 'Intelligent-Tiering'
 
 runs:
   using: 'composite'
