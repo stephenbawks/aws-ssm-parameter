@@ -99,7 +99,6 @@ def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_descr
     """
     ssm = boto3.client('ssm')
 
-    print("Parameter does not exist, creating now.....")
     try:
         response = ssm.put_parameter(
             Name=parameter_name,
