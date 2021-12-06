@@ -69,8 +69,8 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
         parameter_details = ssm.describe_parameters(
             ParameterFilters=[
                 {
-                    'Key': parameter_name,
-                    'Values': [parameter_value]
+                    'Key': 'Name',
+                    'Values': [parameter_name]
                 },
             ],
         )
