@@ -18,7 +18,7 @@ inputs:
   tier:
     description: AWS SSM Parameter Tier
     required: false
-    default: 'Standard'
+    default: Standard
 
 runs:
   using: 'composite'
@@ -28,5 +28,5 @@ runs:
     - run: pip3 install boto3
       shell: bash
     - id: ssm-parameters
-      run: ${{ github.action_path }}/ssm-parameter.py --name ${{ inputs.name }} --value ${{ inputs.value }} --description ${{ inputs.description }} --tier ${{ inputs.tier }}
+      run: ${{ github.action_path }}/ssm-parameter.py --name "${{ inputs.name }}" --value "${{ inputs.value }}" --description "${{ inputs.description }}" --tier "${{ inputs.tier }}"
       shell: bash
