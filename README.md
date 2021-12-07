@@ -12,12 +12,12 @@ This actions purpose is to create SSM Parameters for you in a Github workflow.  
 Currently this option takes three different inputs/arguments.  Two of them are required and one is optional.  
 
 ### Inputs
-| Name          | Type   | Required | Description                                                                                                                  |
-| ------------- | ------ | -------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `name`        | string | Yes      | SSM Parameter Name                                                                                                           |
-| `value`       | string | Yes      | SSM Parameter Value                                                                                                          |
-| `description` | string | No       | (Optional) Parameter to attach to SSM Parameter                                                                              |
-| `tier`        | string | No       | (Optional) Parameter Tier. Default Value: `Intelligent-Tiering` Valid Values: `Standard`,  `Advanced`, `Intelligent-Tiering` |
+| Name          | Type   | Required | Description                                                                                |
+| ------------- | ------ | -------- | ------------------------------------------------------------------------------------------ |
+| `name`        | string | Yes      | SSM Parameter Name                                                                         |
+| `value`       | string | Yes      | SSM Parameter Value                                                                        |
+| `description` | string | Yes      | Parameter to attach to SSM Parameter                                                       |
+| `tier`        | string | No       | (Optional) Parameter Tier. Default Value: `Standard` Valid Values: `Standard`,  `Advanced` |
 
 
 ### SSM Parameter Naming Constraints
