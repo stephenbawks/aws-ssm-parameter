@@ -27,6 +27,10 @@ args = parser.parse_args()
 def check_value_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="", parameter_tier: str="Intelligent-Tiering") -> bool:
     """
     Check to see if the value of a AWS SSM Parameter is up to date
+    
+    URLs:
+        - https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ssm.html#SSM.Client.describe_parameters
+        - https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ssm.html#SSM.Client.get_parameter
 
     Parameters:
         parameter_name (str): AWS SSM Parameter Name
@@ -78,6 +82,9 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
 def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str, parameter_tier: str) -> bool:
     """
     Create or Update a AWS SSM Parameter
+
+    URLs:
+        - https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ssm.html#SSM.Client.put_parameter
 
     Parameters:
         parameter_name (str): AWS SSM Parameter Name
