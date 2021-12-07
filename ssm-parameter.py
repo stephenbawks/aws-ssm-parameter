@@ -15,38 +15,11 @@ import argparse
 """
 
 parser = argparse.ArgumentParser(description="Check for AWS SSM Parameter")
-# group = parser.add_mutually_exclusive_group()
 
-# group.add_argument('--single_value', action='store_true')
-# group.add_argument('--list_of_values', action='store_true')
-
-parser.add_argument(
-    "--name",
-    metavar='name',
-    type=str,
-    help="AWS SSM Parameter Name"
-)
-
-parser.add_argument(
-    "--value",
-    metavar='value',
-    type=str,
-    help="AWS SSM Parameter Value"
-)
-
-parser.add_argument(
-    "--description",
-    metavar='description',
-    type=str,
-    help="AWS SSM Parameter Description"
-)
-
-parser.add_argument(
-    "--tier",
-    metavar='tier',
-    type=str,
-    help="The parameter tier to assign to a parameter."
-)
+parser.add_argument("--name", metavar='name', type=str, help="AWS SSM Parameter Name")
+parser.add_argument("--value", metavar='value', type=str, help="AWS SSM Parameter Value")
+parser.add_argument("--description", metavar='description', type=str, help="AWS SSM Parameter Description")
+parser.add_argument("--tier", metavar='tier', type=str, help="The parameter tier to assign to a parameter.")
 
 args = parser.parse_args()
 
@@ -54,11 +27,17 @@ args = parser.parse_args()
 def check_value_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="", parameter_tier: str="Intelligent-Tiering") -> bool:
     """
     Check to see if the value of a AWS SSM Parameter is up to date
-    If it is not, it will update it
+
+    Parameters:
+        parameter_name (str): AWS SSM Parameter Name
+        parameter_value (str): AWS SSM Parameter Value
+        parameter_description (str): Optional AWS SSM Parameter Description
+        parameter_tier (str): Optional The parameter tier to assign to a parameter.
 
     Returns:
-        (bool): True or False 
+        True or False (bool): [Value of the SSM parameter for the client token]
     """
+
     ssm = boto3.client('ssm')
 
     try:
@@ -98,11 +77,18 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
 
 def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str, parameter_tier: str) -> bool:
     """
-    Create a AWS SSM Parameter
+    Create or Update a AWS SSM Parameter
+
+    Parameters:
+        parameter_name (str): AWS SSM Parameter Name
+        parameter_value (str): AWS SSM Parameter Value
+        parameter_description (str): Optional AWS SSM Parameter Description
+        parameter_tier (str): Optional The parameter tier to assign to a parameter.
 
     Returns:
-        (bool): True or False 
+        True or False (bool): [Value of the SSM parameter for the client token]
     """
+
     ssm = boto3.client('ssm')
 
     try:
