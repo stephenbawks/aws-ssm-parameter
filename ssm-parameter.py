@@ -62,17 +62,16 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
             description = parameter_details['Parameters'][0]['Description']
         except KeyError:
             print('Description not found')
-            description = ""
+            description = ''
         
         tier = parameter_details['Parameters'][0]['Tier']
 
+        print(f"Current Description: {description}")
+        print(f"Current Tier: {tier}")
+        print(f"Specified Description: {parameter_description}")
+        print(f"Specified Tier: {parameter_tier}")
+
         if value == parameter_value and description == parameter_description and tier == parameter_tier:
-            print(f"Current Value: {value}")
-            print(f"Current Description: {description}")
-            print(f"Current Tier: {tier}")
-            print(f"Specified Value: {parameter_value}")
-            print(f"Specified Description: {parameter_description}")
-            print(f"Specified Tier: {parameter_tier}")
             print("SSM Parameter is correct and details are up to date, nothing to do.")
             return True
         else:
