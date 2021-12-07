@@ -71,7 +71,7 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
             print(" - Verified parameter details are current.")
             return True
         else:
-            print(" - Parameter details needs to be updated.")
+            print(" - Parameter details need to be updated.")
             return False
     except ClientError as e:
         # If the parameter does not exist, return None
@@ -110,7 +110,7 @@ def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_descr
             Tier=parameter_tier,
             DataType='text'
         )
-        print(" - Parameter has been created or updated.")
+        print(" - Parameter successfully created/updated.")
         return True
     except ClientError as e:
         # If the parameter does not exist, return None
