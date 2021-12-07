@@ -24,7 +24,7 @@ parser.add_argument("--tier", metavar='tier', type=str, help="The parameter tier
 args = parser.parse_args()
 
 
-def check_value_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str="", parameter_tier: str="Intelligent-Tiering") -> bool:
+def check_value_ssm_parameter(parameter_name: str, parameter_value: str, parameter_description: str, parameter_tier: str) -> bool:
     """
     Check to see if the value of a AWS SSM Parameter is up to date
     
@@ -62,7 +62,7 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
             description = parameter_details['Parameters'][0]['Description']
         except KeyError:
             print('Description not found')
-            description = None
+            description = ""
         
         tier = parameter_details['Parameters'][0]['Tier']
 
