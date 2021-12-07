@@ -67,6 +67,12 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
         tier = parameter_details['Parameters'][0]['Tier']
 
         if value == parameter_value and description == parameter_description and tier == parameter_tier:
+            print(f"Current Value: {value}")
+            print(f"Current Description: {description}")
+            print(f"Current Tier: {tier}")
+            print(f"Specified Value: {parameter_value}")
+            print(f"Specified Description: {parameter_description}")
+            print(f"Specified Tier: {parameter_tier}")
             print("SSM Parameter is correct and details are up to date, nothing to do.")
             return True
         else:
@@ -108,7 +114,7 @@ def put_ssm_parameter(parameter_name: str, parameter_value: str, parameter_descr
             Tier=parameter_tier,
             DataType='text'
         )
-        print("Parameter has been created.")
+        print("Parameter has been created or updated.")
         return True
     except ClientError as e:
         # If the parameter does not exist, return None
