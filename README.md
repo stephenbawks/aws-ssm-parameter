@@ -12,12 +12,12 @@ This actions purpose is to create SSM Parameters for you in a Github workflow.  
 Currently this option takes three different inputs/arguments.  Two of them are required and one is optional.  
 
 ### Inputs
-| Name          | Type   | Required | Description                                                                                |
-| ------------- | ------ | -------- | ------------------------------------------------------------------------------------------ |
-| `name`        | string | Yes      | SSM Parameter Name                                                                         |
-| `value`       | string | Yes      | SSM Parameter Value                                                                        |
-| `description` | string | Yes      | Parameter to attach to SSM Parameter                                                       |
-| `tier`        | string | No       | (Optional) Parameter Tier. Default Value: `Standard` Valid Values: `Standard`,  `Advanced` |
+| Name          | Type   | Required | Description                                                                               |
+| ------------- | ------ | -------- | ----------------------------------------------------------------------------------------- |
+| `name`        | string | Yes      | SSM Parameter Name                                                                        |
+| `value`       | string | Yes      | SSM Parameter Value                                                                       |
+| `description` | string | Yes      | Parameter to attach to SSM Parameter                                                      |
+| `tier`        | string | No       | (Optional) Parameter Tier. Default Value: `Standard` Valid Values: `Standard`, `Advanced` |
 
 
 ### SSM Parameter Naming Constraints
@@ -28,6 +28,11 @@ Currently this option takes three different inputs/arguments.  Two of them are r
 * Parameter names can include only the following symbols and letters: `a-zA-Z0-9_.-/`
 * A parameter name can't include spaces.
 * Parameter hierarchies are limited to a maximum depth of fifteen levels.
+
+### SSM Parameter Tiers 
+Parameter Store includes standard parameters and advanced parameters. You individually configure parameters to use either the standard-parameter tier (the default tier) or the advanced-parameter tier. 
+
+[Check out the AWS documentation](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html) about the differences between the two different tiers.
 
 
 ## Examples
