@@ -74,7 +74,13 @@ def check_value_ssm_parameter(parameter_name: str, parameter_value: str, paramet
                 },
             ],
         )
-        description = parameter_details['Parameters'][0]['Description']
+        
+        try:
+            description = parameter_details['Parameters'][0]['Description']
+        except KeyError:
+            print('Description not found')
+            description = None
+        
         tier = parameter_details['Parameters'][0]['Tier']
 
         if value == parameter_value and description == parameter_description and tier == parameter_tier:
