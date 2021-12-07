@@ -36,7 +36,7 @@ As as emample, suppose you want to create a SSM Parameter in Parameter Store but
 
 ```yaml
 - name: Awesome Client Secret - SSM Parameter
-  uses: stephenbawks/aws-ssm-parameter@v1.6
+  uses: stephenbawks/aws-ssm-parameter@v1.0.0
   with:
       name: /awesome/clientSecret
       value: ${{ secrets.AWESOME_CLIENT_SECRET }}
@@ -48,7 +48,7 @@ The action does not require you to specify a `tier` when using the action.  When
 If that does not work for you, you can also specify `Standard` or `Advanced`.  Check out the [AWS documentation on tiers](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-advanced-parameters.html#ps-default-tier) for more details if you want more information on selecting a tier.  See example below.
 ```yaml
 - name: Awesome Client Secret - SSM Parameter
-  uses: stephenbawks/aws-ssm-parameter@v1.6
+  uses: stephenbawks/aws-ssm-parameter@v1.0.0
   with:
       name: /awesome/clientSecret
       value: ${{ secrets.AWESOME_CLIENT_SECRET }}
