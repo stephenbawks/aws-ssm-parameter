@@ -45,7 +45,7 @@ As as emample, suppose you want to create a SSM Parameter in Parameter Store but
   with:
       name: /awesome/clientSecret
       value: ${{ secrets.AWESOME_CLIENT_SECRET }}
-      description: 'Super Secret - Do Not Tell Anyone'
+      description: Super Secret - Do Not Tell Anyone
 ```
 
 The action does not require you to specify a `tier` when using the action.  If you do not specify one, it will default your parameter to be an `Standard` type parameter.  
@@ -57,6 +57,6 @@ If that does not work for you, you can also specify `Standard` or `Advanced`.  C
   with:
       name: /awesome/clientSecret
       value: ${{ secrets.AWESOME_CLIENT_SECRET }}
-      description: 'Super Secret - Do Not Tell Anyone'
+      description: Super Secret - Do Not Tell Anyone
       tier: Advanced
 ```
