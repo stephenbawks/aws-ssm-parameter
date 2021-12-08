@@ -6,7 +6,7 @@ branding:
   color: orange
 
 inputs:
-  name: # id of input
+  name:
     description: AWS SSM Parameter Name
     required: true
   value:
