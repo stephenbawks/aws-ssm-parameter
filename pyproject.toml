@@ -1,0 +1,13 @@
+[project]
+name = "aws-ssm-parameter"
+version = "1.1.0"
+description = "Default template for PDM package"
+authors = [{ name = "stephenbawks", email = "stephen@bawks.com" }]
+dependencies = ["boto3>=1.34.161", "argparse>=1.4.0", "botocore>=1.34.161"]
+requires-python = ">=3.8"
+readme = "README.md"
+license = { text = "MIT" }
+
+
+[tool.pdm]
+distribution = false

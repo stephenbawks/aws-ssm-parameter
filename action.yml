@@ -25,8 +25,13 @@ runs:
   steps:
     - run: echo "--- Checking AWS SSM Parameters ---"
       shell: bash
-    - run: pip3 install boto3
+    - id: setup-python
+      name: setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.12
+        cache: 'pip' # caching pip dependencies
+    - run: pip3 install boto3 botocore
       shell: bash
-    - id: ssm-parameters
-      run: ${{ github.action_path }}/ssm-parameter.py --name "${{ inputs.name }}" --value "${{ inputs.value }}" --description "${{ inputs.description }}" --tier "${{ inputs.tier }}"
-      shell: bash
+    - run: ${{ github.action_path }}/ssm-parameter.py --name "${{ inputs.name }}" --value "${{ inputs.value }}" --description "${{ inputs.description }}" --tier "${{ inputs.tier }}"
+      shell: python
