@@ -33,5 +33,5 @@ runs:
         cache: 'pip' # caching pip dependencies
     - run: pip3 install boto3 botocore
       shell: bash
-    - run: ${{ github.action_path }}/ssm-parameter.py --name "${{ inputs.name }}" --value "${{ inputs.value }}" --description "${{ inputs.description }}" --tier "${{ inputs.tier }}"
-      shell: python
+    - run: python ${{ github.action_path }}/ssm-parameter.py --name "${{ inputs.name }}" --value "${{ inputs.value }}" --description "${{ inputs.description }}" --tier "${{ inputs.tier }}"
+      shell: bash
